@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // 3. Render Login View using reusable layout
-$page_title = 'Masuk - SMPPH';
+$page_title = 'Masuk - SMPSM';
 $container_style = 'max-width: 440px; margin-top: 10vh; flex-grow: 0;';
 $footer_style = 'margin-top: auto; background: none; border-top: none;';
 $hide_navbar = true;
@@ -74,7 +74,7 @@ $hide_navbar = true;
 require_once 'includes/header.php';
 ?>
 <div class="brand-header" style="text-align: center; border-bottom: none; margin-bottom: 16px;">
-    <h1>SMPPH</h1>
+    <h1>SMPSM</h1>
     <p>Sistem Manajemen Pemilahan Sampah Mahasiswa</p>
 </div>
 

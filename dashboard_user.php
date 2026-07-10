@@ -162,7 +162,7 @@ function getPageUrl($pageNum) {
 }
 
 // Render View using layout template
-$page_title = 'Dashboard Mahasiswa - SMPPH';
+$page_title = 'Dashboard Mahasiswa - SMPSM';
 require_once 'includes/header.php';
 ?>
 <div class="brand-header">
@@ -275,30 +275,7 @@ require_once 'includes/header.php';
                 </div>
                 
                 <!-- Pagination Controls -->
-                <?php if ($total_pages > 1): ?>
-                    <div class="pagination">
-                        <span>Halaman:</span>
-                        <?php if ($page > 1): ?>
-                            <a href="<?php echo getPageUrl($page - 1); ?>">&laquo; Sebelum</a>
-                        <?php else: ?>
-                            <span class="disabled">&laquo; Sebelum</span>
-                        <?php endif; ?>
-
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <?php if ($i === $page): ?>
-                                <span class="current"><?php echo $i; ?></span>
-                            <?php else: ?>
-                                <a href="<?php echo getPageUrl($i); ?>"><?php echo $i; ?></a>
-                            <?php endif; ?>
-                        <?php endfor; ?>
-
-                        <?php if ($page < $total_pages): ?>
-                            <a href="<?php echo getPageUrl($page + 1); ?>">Berikut &raquo;</a>
-                        <?php else: ?>
-                            <span class="disabled">Berikut &raquo;</span>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
+                <?php echo get_pagination_html($page, $total_pages); ?>
             <?php endif; ?>
         </div>
     </div>

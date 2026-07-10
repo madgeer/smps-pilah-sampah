@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Render Registration View using reusable layout
-$page_title = 'Daftar Akun Baru - SMPPH';
+$page_title = 'Daftar Akun Baru - SMPSM';
 $container_style = 'max-width: 500px; margin-top: 5vh; flex-grow: 0;';
 $footer_style = 'margin-top: auto; background: none; border-top: none;';
 $hide_navbar = true;

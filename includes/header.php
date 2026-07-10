@@ -10,7 +10,7 @@ $user = $_SESSION['user'] ?? null;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($page_title ?? 'SMPPH'); ?></title>
+    <title><?php echo htmlspecialchars($page_title ?? 'SMPSM'); ?></title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         .pagination {
@@ -47,7 +47,7 @@ $user = $_SESSION['user'] ?? null;
 <body>
     <?php if ($user && !isset($hide_navbar)): ?>
         <div class="navbar">
-            <h2>SMPPH <?php echo $user['role'] === 'admin' ? '(Administrator)' : ''; ?></h2>
+            <h2>SMPSM <?php echo $user['role'] === 'admin' ? '(Administrator)' : ''; ?></h2>
             <div class="nav-links">
                 <span class="nav-user-info">Masuk sebagai: <strong><?php echo htmlspecialchars($user['email']); ?></strong> (<?php echo $user['role'] === 'admin' ? 'Admin' : 'Mahasiswa'; ?>)</span>
                 <a href="logout.php">Keluar</a>
