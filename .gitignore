@@ -1,0 +1,26 @@
+# .gitignore
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Laragon / Local Server configuration if any
+.env
+.htaccess.local
+
+# Backup and temp files
+*.tmp
+*.bak
+*.log
+
+# Antigravity CLI / Gemini App Data
+.gemini/
+brain/
+scratch/
+transcript.jsonl
+transcript_full.jsonl
