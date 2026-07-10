@@ -107,104 +107,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// Render Registration View using reusable layout
+$page_title = 'Daftar Akun Baru - SMPPH';
+$container_style = 'max-width: 500px; margin-top: 5vh; flex-grow: 0;';
+$footer_style = 'margin-top: auto; background: none; border-top: none;';
+$hide_navbar = true;
+
+require_once 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Akun Baru - SMPPH</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <div class="container" style="max-width: 500px; margin-top: 5vh; flex-grow: 0;">
-        <div class="brand-header" style="text-align: center; border-bottom: none; margin-bottom: 8px;">
-            <h1>Pendaftaran Akun</h1>
-            <p>Sistem Manajemen Pemilahan Sampah Mahasiswa</p>
+<div class="brand-header" style="text-align: center; border-bottom: none; margin-bottom: 8px;">
+    <h1>Pendaftaran Akun</h1>
+    <p>Sistem Manajemen Pemilahan Sampah Mahasiswa</p>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin-bottom: 20px;">
+
+<?php if (!empty($success_message)): ?>
+    <div class="alert alert-success">
+        <strong>Sukses:</strong> <?php echo htmlspecialchars($success_message); ?>
+        <div style="margin-top: 8px;">
+            <a href="index.php" class="btn btn-primary btn-small">Ke Halaman Masuk &raquo;</a>
         </div>
-        
-        <hr style="border: none; border-top: 1px solid var(--border-color); margin-bottom: 20px;">
-
-        <?php if (!empty($success_message)): ?>
-            <div class="alert alert-success">
-                <strong>Sukses:</strong> <?php echo htmlspecialchars($success_message); ?>
-                <div style="margin-top: 8px;">
-                    <a href="index.php" class="btn btn-primary btn-small">Ke Halaman Masuk &raquo;</a>
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <?php if (!empty($error_message)): ?>
-            <div class="alert alert-danger">
-                <strong>Galat:</strong> <?php echo htmlspecialchars($error_message); ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if (empty($success_message)): ?>
-            <form action="register.php" method="POST" id="form-register">
-                <div class="form-group">
-                    <label for="email">Alamat Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="contoh@example.com" required value="<?php echo htmlspecialchars($email ?? ''); ?>">
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 4px;">
-                        *Jika email Anda sudah didaftarkan oleh admin, Anda hanya perlu membuat kata sandi baru.
-                    </span>
-                </div>
-
-                <!-- Profile Section: only visible/required for new emails -->
-                <div id="new-profile-fields">
-                    <div class="form-group">
-                        <label for="nama">Nama Lengkap</label>
-                        <input type="text" id="nama" name="nama" class="form-control" placeholder="Nama lengkap Anda..." value="<?php echo htmlspecialchars($nama ?? ''); ?>">
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-                        <div class="form-group">
-                            <label for="kelas_select">Kelas</label>
-                            <select id="kelas_select" class="form-control">
-                                <option value="" disabled selected>-- Pilih Kelas --</option>
-                                <?php foreach ($classes_list as $cl): ?>
-                                    <option value="<?php echo $cl['id_kelas']; ?>"><?php echo htmlspecialchars($cl['nama_kelas']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="kelompok_select">Kelompok</label>
-                            <select id="kelompok_select" name="id_kelompok" class="form-control">
-                                <option value="0" disabled selected>-- Pilih Kelompok --</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="form-group">
-                        <label for="password">Kata Sandi Baru</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm_password">Konfirmasi Kata Sandi</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="••••••••" required>
-                    </div>
-                </div>
-
-                <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Daftarkan Akun</button>
-                    <a href="index.php" class="btn btn-secondary" style="width: 100%; text-align: center;">Kembali ke Login</a>
-                </div>
-            </form>
-        <?php endif; ?>
     </div>
+<?php endif; ?>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const kelompokByKelas = <?php echo json_encode($groups_by_class); ?>;
-            const kelasSelect = document.getElementById('kelas_select');
-            const kelompokSelect = document.getElementById('kelompok_select');
-            const emailInput = document.getElementById('email');
-            const namaInput = document.getElementById('nama');
-            const newProfileFields = document.getElementById('new-profile-fields');
+<?php if (!empty($error_message)): ?>
+    <div class="alert alert-danger">
+        <strong>Galat:</strong> <?php echo htmlspecialchars($error_message); ?>
+    </div>
+<?php endif; ?>
 
-            // 1. Dynamic Kelompok Dropdown based on selected Kelas
+<?php if (empty($success_message)): ?>
+    <form action="register.php" method="POST" id="form-register">
+        <div class="form-group">
+            <label for="email">Alamat Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="contoh@example.com" required value="<?php echo htmlspecialchars($email ?? ''); ?>">
+            <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 4px;">
+                *Jika email Anda sudah didaftarkan oleh admin, Anda hanya perlu membuat kata sandi baru.
+            </span>
+        </div>
+
+        <!-- Profile Section: only visible/required for new emails -->
+        <div id="new-profile-fields">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" class="form-control" placeholder="Nama lengkap Anda..." value="<?php echo htmlspecialchars($nama ?? ''); ?>">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <div class="form-group">
+                    <label for="kelas_select">Kelas</label>
+                    <select id="kelas_select" class="form-control">
+                        <option value="" disabled selected>-- Pilih Kelas --</option>
+                        <?php foreach ($classes_list as $cl): ?>
+                            <option value="<?php echo $cl['id_kelas']; ?>"><?php echo htmlspecialchars($cl['nama_kelas']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kelompok_select">Kelompok</label>
+                    <select id="kelompok_select" name="id_kelompok" class="form-control">
+                        <option value="0" disabled selected>-- Pilih Kelompok --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+                <label for="password">Kata Sandi Baru</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Konfirmasi Kata Sandi</label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Daftarkan Akun</button>
+            <a href="index.php" class="btn btn-secondary" style="width: 100%; text-align: center;">Kembali ke Login</a>
+        </div>
+    </form>
+<?php endif; ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const kelompokByKelas = <?php echo json_encode($groups_by_class); ?>;
+        const kelasSelect = document.getElementById('kelas_select');
+        const kelompokSelect = document.getElementById('kelompok_select');
+        const emailInput = document.getElementById('email');
+        const namaInput = document.getElementById('nama');
+        const newProfileFields = document.getElementById('new-profile-fields');
+
+        // 1. Dynamic Kelompok Dropdown based on selected Kelas
+        if (kelasSelect) {
             kelasSelect.addEventListener('change', function() {
                 const idKelas = this.value;
                 kelompokSelect.innerHTML = '<option value="0" disabled selected>-- Pilih Kelompok --</option>';
@@ -218,13 +216,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     });
                 }
             });
+        }
 
-            // 2. Client-side Email Check: If email is already in seeded list, make Name & Group fields optional
-            // We can check if email matches "mahasiswaX_emailY@example.com" which is the pattern of pre-seeded emails.
-            // Or we can just check if they are entered. The backend handles verification securely.
+        // 2. Client-side Email Check to adjust fields
+        if (emailInput) {
             emailInput.addEventListener('input', function() {
                 const email = this.value.trim().toLowerCase();
-                // Simple pattern matching for seeded emails to improve UI feedback
                 if (email.startsWith('mahasiswa') && email.includes('@example.com')) {
                     newProfileFields.style.opacity = '0.5';
                     namaInput.required = false;
@@ -237,11 +234,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     kelasSelect.required = true;
                 }
             });
-        });
-    </script>
-
-    <footer style="margin-top: auto; background: none; border-top: none;">
-        SMPSM &copy; 
-    </footer>
-</body>
-</html>
+        }
+    });
+</script>
+<?php
+require_once 'includes/footer.php';
+?>
