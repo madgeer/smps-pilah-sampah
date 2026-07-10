@@ -50,6 +50,8 @@ $user = $_SESSION['user'] ?? null;
             <h2>SMPSM <?php echo $user['role'] === 'admin' ? '(Administrator)' : ''; ?></h2>
             <div class="nav-links">
                 <span class="nav-user-info">Masuk sebagai: <strong><?php echo htmlspecialchars($user['email']); ?></strong> (<?php echo $user['role'] === 'admin' ? 'Admin' : 'Mahasiswa'; ?>)</span>
+                <a href="<?php echo $user['role'] === 'admin' ? 'dashboard_admin.php' : 'dashboard_user.php'; ?>">Beranda</a>
+                <a href="profile.php">Profil Saya</a>
                 <a href="logout.php">Keluar</a>
             </div>
         </div>
